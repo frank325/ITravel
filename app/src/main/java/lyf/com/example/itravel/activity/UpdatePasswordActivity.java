@@ -107,7 +107,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
      * 修改密码
      */
     private void updatePassword() {
-        hashMap.put("data", newPassword);
+        hashMap.put("data", md5Password);
         hashMap.put("dataName", "password");
         hashMap.put("account", account);
 
