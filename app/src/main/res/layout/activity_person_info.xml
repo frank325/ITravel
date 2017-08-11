@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBEBEB"
+    tools:context="lyf.com.example.itravel.activity.PersonInfoActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_person_info"
+        android:layout_height="45dip"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="详细资料"
+            android:textColor="@color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ll_person_info"
+        android:layout_below="@id/tb_person_info"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="200dip"
+        android:background="@color/colorLoginBackground">
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_person_head"
+        android:layout_width="70dip"
+        android:layout_height="70dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dip"/>
+
+    <TextView
+        android:id="@+id/tv_person_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_person_head"
+        android:layout_centerHorizontal="true"
+        android:text="昵称"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dip"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="♂"
+        android:textSize="20sp"
+        android:layout_marginTop="8dip"
+        android:textColor="@color/white"
+        android:layout_below="@id/iv_person_head"
+        android:layout_toRightOf="@id/tv_person_name"/>
+
+    <TextView
+        android:id="@+id/tv_person_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_person_name"
+        android:layout_centerHorizontal="true"
+        android:text="个性签名"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dip"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dip"
+        android:orientation="horizontal"
+        android:layout_below="@id/ll_person_info">
+
+        <TextView
+            android:id="@+id/tv_share"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#CCCCCC" />
+
+    </LinearLayout>
+
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/rv_person_info"
+       android:layout_width="match_parent"
+       android:overScrollMode="never"
+       android:layout_height="match_parent"
+       android:layout_below="@id/ll_share">
+
+   </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

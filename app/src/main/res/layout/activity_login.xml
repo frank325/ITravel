@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lyf.com.example.itravel.activity.LoginActivity">
+
+    <ImageView
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:background="@drawable/itravel"
+        android:layout_marginTop="80dip"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/et_account"
+        android:layout_width="250dip"
+        android:layout_height="50dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dip"
+        android:hint="@string/account"
+        android:paddingLeft="40dip"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:maxLength="11" />
+
+    <ImageView
+        android:layout_width="19.5dip"
+        android:layout_height="21.5dip"
+        android:background="@drawable/icon_account"
+        android:layout_marginTop="274dip"
+        android:layout_marginLeft="5dip"
+        android:layout_alignLeft="@id/et_account"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="250dip"
+        android:layout_height="50dip"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/et_account"
+        android:layout_marginTop="15dip"
+        android:hint="@string/password"
+        android:paddingLeft="40dip"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:inputType="textPassword"
+        android:textSize="18sp"
+        android:maxLength="16" />
+
+    <ImageView
+        android:layout_width="19.5dip"
+        android:layout_height="21.5dip"
+        android:background="@drawable/icon_password"
+        android:layout_below="@id/et_account"
+        android:layout_marginTop="29dip"
+        android:layout_marginLeft="5dip"
+        android:layout_alignLeft="@id/et_password"/>
+
+    <ImageView
+        android:id="@+id/iv_visibility_on_off"
+        android:layout_width="15dip"
+        android:layout_height="15dip"
+        android:background="@drawable/visibility_off"
+        android:layout_below="@id/et_account"
+        android:layout_marginTop="30dip"
+        android:layout_marginRight="10dip"
+        android:clickable="true"
+        android:layout_alignRight="@id/et_password"/>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="225dip"
+        android:layout_alignRight="@id/et_account"
+        android:text="@string/underline_register"
+        android:textSize="20sp"
+        android:autoLink="all"
+        android:clickable="true"
+        android:textColor="@drawable/textview_color" />
+
+    <TextView
+        android:id="@+id/tv_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:layout_alignRight="@id/et_password"
+        android:layout_marginTop="5dip"
+        android:text="@string/forget_password"
+        android:textSize="16sp"
+        android:autoLink="all"
+        android:clickable="true"
+        android:textColor="@drawable/textview_color"/>
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="220dip"
+        android:layout_height="45dip"
+        android:background="@drawable/button_background"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_forget_password"
+        android:layout_marginTop="30dip"
+        android:text="@string/login"
+        android:textSize="18sp"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>

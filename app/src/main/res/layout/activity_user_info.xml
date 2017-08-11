@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EBEBEB"
+    tools:context="lyf.com.example.itravel.activity.UserInfoActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_user_info"
+        android:layout_height="45dip"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="@string/person_information"
+            android:textColor="@color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_user_info"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:layout_height="0dip"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dip"
+        android:visibility="gone"
+        android:text="点击重新获取"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorLoginBackground"
+        android:textSize="16sp"/>
+
+</LinearLayout>

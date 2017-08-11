@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="lyf.com.example.itravel.activity.CityIntroduceActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_city_introduce"
+        android:layout_height="45dip"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="@string/city"
+            android:textColor="@color/white"/>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_city_photo"
+            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_height="165dip"
+            android:paddingTop="5dip"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_bar"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="#f3f3f3"
+            android:layout_below="@id/iv_city_photo">
+
+            <TextView
+                android:id="@+id/tv_scenic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scenic"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorLoginBackground"
+                android:layout_marginLeft="75dip"/>
+
+            <TextView
+                android:id="@+id/tv_travel_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/travel_notes"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:textColor="#999999"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="75dip"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0.001dip"
+            android:orientation="horizontal"
+            android:background="#CCCCCC"
+            android:layout_alignBottom="@id/rl_bar">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip"
+            android:orientation="horizontal"
+            android:background="#E5E5E5"
+            android:layout_above="@id/rl_bar"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/tv_city_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/city_address"
+                android:textSize="16sp"
+                android:layout_above="@id/rl_bar" />
+
+            <TextView
+                android:id="@+id/tv_think_go_num"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:gravity="right"
+                android:textSize="16sp"
+                android:text="0"
+                android:layout_marginRight="5dip"/>
+
+            <ImageView
+                android:id="@+id/iv_good"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_marginBottom="3dip"
+                android:src="@drawable/good_black"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_city_introduce"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:background="#EBEBEB"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="lyf.com.example.itravel">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".ITravelApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon_itravel"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".activity.RetrievePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTheme" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CityIntroduceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CityTopActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UpdateUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UpdateHeadPortraitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserSafeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddTravelNotesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TravelNotesActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.MyShareActivity" />
+        <activity android:name=".activity.MyClooectActivity"></activity>
+    </application>
+
+</manifest>

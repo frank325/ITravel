@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:gravity="center_horizontal"
+    tools:context="lyf.com.example.itravel.activity.AddTravelNotesActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_add"
+        android:layout_height="45dip"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:text="游记"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="@string/add"
+            android:textSize="16dip"
+            android:textColor="@drawable/textview_color"
+            android:layout_marginRight="15dip"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/et_city"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:focusable="true"
+        android:layout_below="@id/tb_add"
+        android:focusableInTouchMode="true"
+        android:hint="请输入城市"
+        android:paddingLeft="70dip"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:inputType="textPhonetic"
+        android:maxLength="20"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignTop="@id/et_city"
+        android:layout_marginTop="10.5dip"
+        android:layout_marginLeft="15dip"
+        android:text="城市"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.001dip"
+        android:layout_below="@id/et_city"
+        android:background="#CCCCCC"/>
+
+    <EditText
+        android:id="@+id/et_money"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:paddingLeft="70dip"
+        android:gravity="center_vertical"
+        android:layout_below="@id/et_city"
+        android:background="@null"
+        android:hint="请输入花费的金钱"
+        android:inputType="phone"
+        android:maxLength="6"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignTop="@id/et_money"
+        android:layout_marginTop="10.5dip"
+        android:layout_marginLeft="15dip"
+        android:text="花费"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_below="@id/et_money"
+        android:layout_width="match_parent"
+        android:layout_height="0.001dip"
+        android:background="#CCCCCC"/>
+
+    <EditText
+        android:id="@+id/et_day_num"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:paddingLeft="70dip"
+        android:layout_below="@id/et_money"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:hint="请输入游玩的天数"
+        android:inputType="textPhonetic"
+        android:maxLength="3"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignTop="@id/et_day_num"
+        android:layout_marginTop="10.5dip"
+        android:layout_marginLeft="15dip"
+        android:text="天数"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_below="@id/et_day_num"
+        android:layout_width="match_parent"
+        android:layout_height="0.001dip"
+        android:background="#CCCCCC"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/et_day_num"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:background="@null"
+                    android:paddingLeft="70dip"
+                    android:paddingTop="10dip"
+                    android:hint="请输入内容"
+                    android:maxLength="1000"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_alignTop="@id/et_content"
+                    android:layout_marginTop="10.5dip"
+                    android:layout_marginLeft="15dip"
+                    android:text="内容"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_below="@id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.001dip"
+                    android:background="#CCCCCC"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_travel_photo"
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:src="@drawable/add_big"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:text="目前只能添加一张图片"
+                    android:textColor="#999999"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

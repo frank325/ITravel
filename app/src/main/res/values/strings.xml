@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">爱旅游</string>
+    <string name="welcome">寻 找 ， 最 美 的 瞬 间</string>
+    <string name="account">帐号</string>
+    <string name="password">密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="underline_register"><u>注册</u></string>
+    <string name="forget_password"><u>忘记密码？</u></string>
+    <string name="home_page">首页</string>
+    <string name="share">分享</string>
+    <string name="person">我</string>
+    <string name="search">搜索</string>
+    <string name="add">添加</string>
+    <string name="setting">设置</string>
+    <string name="search_builder">搜索城市、地区或景点</string>
+    <string name="city">城市</string>
+    <string name="city_address">城市地址</string>
+    <string name="loading">加载中···</string>
+    <string name="travel_notes">游记</string>
+    <string name="scenic">景点</string>
+    <string name="scenic_name">景点名称</string>
+    <string name="scenic_introduction">景点介绍：</string>
+    <string name="top">热门城市</string>
+    <string name="name">用户名</string>
+    <string name="person_information">个人资料</string>
+    <string name="save">保存</string>
+    <string name="head_portrait">头像</string>
+    <string name="update_head_portrait">更换头像</string>
+</resources>
