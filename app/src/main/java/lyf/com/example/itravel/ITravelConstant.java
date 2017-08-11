@@ -1,7 +1,7 @@
 package lyf.com.example.itravel;
 
 /**
- * Created by Administrator on 2017/8/4.
+ * 全局变量
  */
 
 public class ITravelConstant {

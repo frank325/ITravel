@@ -13,7 +13,7 @@ import lyf.com.example.itravel.bean.Scenic;
 import lyf.com.example.itravel.holder.ScenicHolder;
 
 /**
- * Created by Administrator on 2017/8/6.
+ * 景点RecyclerView适配器
  */
 
 public class ScenicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -44,4 +44,5 @@ public class ScenicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemCount() {
         return scenics.size();
     }
+
 }

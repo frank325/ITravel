@@ -1,18 +1,21 @@
 package lyf.com.example.itravel.activity;
 
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.adapter.SettingAdapter;
-import lyf.com.example.itravel.adapter.UserInfoAdapter;
+
+/**
+ * 设置页面
+ */
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -34,6 +37,9 @@ public class SettingActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbSetting.setNavigationIcon(R.drawable.back);
         tbSetting.setTitle("");
@@ -48,11 +54,29 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化RecyclerView
+     */
     private void initRecyclerView() {
         rvSetting.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         settingAdapter = new SettingAdapter(this);
         rvSetting.setAdapter(settingAdapter);
+
+        rvSetting.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int pos = parent.getChildAdapterPosition(view);
+                if (pos == 1) {
+                    outRect.top = 2;
+                }
+                if (pos == 2) {
+                    outRect.top= 60;
+                }
+            }
+        });
+
         settingAdapter.addArray(info);
         settingAdapter.notifyDataSetChanged();
     }
+
 }

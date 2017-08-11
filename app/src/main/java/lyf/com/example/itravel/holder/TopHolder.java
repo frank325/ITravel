@@ -17,7 +17,7 @@ import lyf.com.example.itravel.activity.CityIntroduceActivity;
 import lyf.com.example.itravel.bean.City;
 
 /**
- * Created by Administrator on 2017/8/6.
+ * 热门城市Holder
  */
 
 public class TopHolder extends RecyclerView.ViewHolder {
@@ -36,17 +36,22 @@ public class TopHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(City city, int position) {
         this.city = city;
         Picasso.with(itemView.getContext()).load(ITravelConstant.URL + city.getCity_photo_url())
                 .resize(ITravelConstant.WITTH, 480).into(ivCityPhoto);
-
         tvTop.setText("Top" + (position + 1));
         tvCityName.setText(city.getCity_name());
         tvCityAddress.setText(city.getCity_address());
         tvThinkGoNum.setText(city.getThink_go_num());
     }
 
+    /**
+     * 响应点击事件，跳转至城市信息页面
+     */
     @OnClick(R.id.iv_city_photo) public void clickPhoto() {
         Intent intent = new Intent();
         intent.putExtra("city_name", city.getCity_name());

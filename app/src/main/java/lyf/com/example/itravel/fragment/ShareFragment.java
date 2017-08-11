@@ -3,16 +3,12 @@ package lyf.com.example.itravel.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,10 +69,23 @@ public class ShareFragment extends Fragment {
         }
     }
 
+    /**
+     * 初始化RecylerView
+     */
+    private void initRecylerView() {
+        rvShare.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        shareAdapter = new ShareAdapter(getContext());
+        rvShare.setAdapter(shareAdapter);
+    }
+
+    /**
+     * 初始化数据
+     */
     private void initData() {
         isGetInfoSuccess = false;
         tvRefresh.setVisibility(View.VISIBLE);
         tvRefresh.setText("正在刷新...");
+
         /**
          * 发送网络请求
          */
@@ -109,17 +118,10 @@ public class ShareFragment extends Fragment {
         });
     }
 
-    private void initRecylerView() {
-        rvShare.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        shareAdapter = new ShareAdapter(getContext());
-        rvShare.setAdapter(shareAdapter);
-    }
-
     /**
      * 获取用户点击屏幕之后的操作
      */
     private void initTouchPull() {
-
         rvShare.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -129,8 +131,8 @@ public class ShareFragment extends Fragment {
                         break;
                     case MotionEvent.ACTION_MOVE: //用户按下之后在屏幕上移动的过程
                         float y = motionEvent.getY();
-                        isCanScroll = rvShare.canScrollVertically(-1);
-                        if (!isCanScroll) {
+                        isCanScroll = rvShare.canScrollVertically(-1); //判断是否在顶部
+                        if (!isCanScroll) { //在顶部
                             if (y >= mTouchMoveStartY) {
                                 tvRefresh.setVisibility(View.VISIBLE);
                                 tvRefresh.setText("下拉刷新");
@@ -141,7 +143,7 @@ public class ShareFragment extends Fragment {
                             }
                         }
                         break;
-                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_UP: //用户离开屏幕的瞬间
                         float y1 = motionEvent.getY();
                         isCanScroll = rvShare.canScrollVertically(-1);
                         if (!isCanScroll) {

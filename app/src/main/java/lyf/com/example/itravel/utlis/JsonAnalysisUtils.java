@@ -3,7 +3,6 @@ package lyf.com.example.itravel.utlis;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.bean.User;
 
 /**
- * Created by Administrator on 2017/8/5.
+ * Json数据解析工具类
  */
 
 public class JsonAnalysisUtils {

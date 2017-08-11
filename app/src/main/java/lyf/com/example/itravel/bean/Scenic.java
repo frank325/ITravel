@@ -1,7 +1,7 @@
 package lyf.com.example.itravel.bean;
 
 /**
- * Created by Administrator on 2017/8/6.
+ * 景点信息
  */
 
 public class Scenic {

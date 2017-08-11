@@ -129,6 +129,5 @@ public class ImageBarnnerFramLayout extends FrameLayout implements ImageBarnnerV
             }
         }
     }
-
-
+    
 }

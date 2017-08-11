@@ -18,13 +18,12 @@ import java.util.List;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.holder.MyShareHolder;
-import lyf.com.example.itravel.holder.TravelNotesHolder;
 import lyf.com.example.itravel.model.OkhttpModel;
 import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 我的分享RecyclerView适配器
  */
 
 public class MyShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -50,7 +49,11 @@ public class MyShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((MyShareHolder)holder).bindHolder(travelNotes.get(position), position);
+        ((MyShareHolder)holder).bindHolder(travelNotes.get(position));
+
+        /**
+         * 监听点击事件，弹出窗口
+         */
         ((MyShareHolder) holder).tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,9 +64,13 @@ public class MyShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             @Override
                             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                 account = travelNotes.get(position).getTravel_account();
+
                                 hashMap.put("account", account);
                                 hashMap.put("id_travel_notes", travelNotes.get(position).getId_travel_notes());
 
+                                /**
+                                 * 发送网络请求
+                                 */
                                 OkhttpModel okhttpModel = new OkhttpModel();
                                 okhttpModel.doGet("deleTravelNotesInfo.ao", hashMap, new Callback() {
 

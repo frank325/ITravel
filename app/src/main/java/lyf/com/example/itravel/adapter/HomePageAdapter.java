@@ -44,4 +44,5 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemCount() {
         return citys.size();
     }
+
 }

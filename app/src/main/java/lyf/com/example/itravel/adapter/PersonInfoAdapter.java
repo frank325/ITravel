@@ -10,11 +10,10 @@ import java.util.List;
 
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.TravelNotes;
-import lyf.com.example.itravel.holder.MyShareHolder;
 import lyf.com.example.itravel.holder.PersonInfoHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 用户详细信息RecyclerView适配器
  */
 
 public class PersonInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -38,11 +37,12 @@ public class PersonInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((PersonInfoHolder)holder).bindHolder(travelNotes.get(position), position);
+        ((PersonInfoHolder)holder).bindHolder(travelNotes.get(position));
     }
 
     @Override
     public int getItemCount() {
         return travelNotes.size();
     }
+
 }

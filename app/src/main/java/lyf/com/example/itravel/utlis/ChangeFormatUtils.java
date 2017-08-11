@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Administrator on 2017/8/7.
+ * 转换格式工具类
  */
 
 public class ChangeFormatUtils {
@@ -59,7 +59,6 @@ public class ChangeFormatUtils {
 
     /**
      * 压缩图片（质量压缩）
-     * @param bitmap
      */
     public static File compressImage(Bitmap bitmap, String account) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

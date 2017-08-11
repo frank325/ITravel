@@ -10,8 +10,11 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.adapter.SettingAdapter;
 import lyf.com.example.itravel.adapter.UserSafeAdapter;
+
+/**
+ * 账户安全页面
+ */
 
 public class UserSafeActivity extends AppCompatActivity {
 
@@ -33,6 +36,9 @@ public class UserSafeActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbUserSafe.setNavigationIcon(R.drawable.back);
         tbUserSafe.setTitle("");
@@ -47,6 +53,9 @@ public class UserSafeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化initRecyclerView
+     */
     private void initRecyclerView() {
         rvUserSafe.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         userSafeAdapter = new UserSafeAdapter(this);
@@ -54,4 +63,5 @@ public class UserSafeActivity extends AppCompatActivity {
         userSafeAdapter.addArray(info);
         userSafeAdapter.notifyDataSetChanged();
     }
+
 }

@@ -1,8 +1,6 @@
 package lyf.com.example.itravel.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,14 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.callback.Callback;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -183,12 +177,15 @@ public class HomePageFragment extends Fragment {
         });
     }
 
+    /**
+     * 响应点击事件，刷新页面
+     */
     @OnClick (R.id.iv_refresh) public void refresh() {
         initData();
     }
 
     /**
-     * 响应点击事件
+     * 响应点击事件。跳转至城市信息页面
      */
     @OnClick (R.id.ll_ibfl) public void vgClick() {
         Intent intent = new Intent();
@@ -197,9 +194,13 @@ public class HomePageFragment extends Fragment {
         startActivity(intent);
     }
 
+    /**
+     * 响应点击事件，跳转至热门城市页面
+     */
     @OnClick (R.id.iv_top) public void top() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), CityTopActivity.class);
         startActivity(intent);
     }
+
 }

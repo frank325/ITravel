@@ -40,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.et_account) EditText etAccount;
     @BindView(R.id.et_password) EditText etPassword;
     @BindView(R.id.et_confirm_password) EditText etConfirmPassword;
-
     @BindView(R.id.iv_password_visibility_on_off) ImageView ivPasswordVisibilityOnOff;
     @BindView(R.id.iv_confirm_password_visibility_on_off) ImageView ivConfirmPasswordVisibilityOnOff;
 
@@ -50,13 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         ButterKnife.bind(this); //绑定依赖注入ButterKnife
-    }
-
-    /**
-     * 响应点击事件，执行注册
-     */
-    @OnClick(R.id.bt_register) public void register() {
-        doRegister();
     }
 
     /**
@@ -100,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
          */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("registerUser.do", hashMap, new Callback() {
+
             @Override
             public Object parseNetworkResponse(Response response, int id) throws Exception {
                 return response.body().string();
@@ -129,6 +122,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 响应点击事件，执行注册
+     */
+    @OnClick(R.id.bt_register) public void register() {
+        doRegister();
     }
 
     /**

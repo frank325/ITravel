@@ -1,5 +1,9 @@
 package lyf.com.example.itravel.bean;
 
+/**
+ * 游记信息
+ */
+
 public class TravelNotes {
 
 	private String id_travel_notes;

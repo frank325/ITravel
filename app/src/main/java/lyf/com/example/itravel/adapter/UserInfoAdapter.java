@@ -9,7 +9,7 @@ import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.holder.UserInfoHolder;
 
 /**
- * Created by Administrator on 2017/8/7.
+ * 用户信息RecyclerView适配器
  */
 
 public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -41,4 +41,5 @@ public class UserInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemCount() {
         return userInfo.length;
     }
+
 }

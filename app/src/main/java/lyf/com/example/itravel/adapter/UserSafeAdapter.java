@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.holder.SettingHolder;
 import lyf.com.example.itravel.holder.UserSafeHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 账户安全RecyclerView适配器
  */
 
 public class UserSafeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -42,4 +41,5 @@ public class UserSafeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemCount() {
         return info.length;
     }
+
 }

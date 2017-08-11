@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.activity.SearchActivity;
 import lyf.com.example.itravel.bean.City;
 import lyf.com.example.itravel.holder.SearchHoldere;
-import lyf.com.example.itravel.holder.TopHolder;
 
 /**
- * Created by Administrator on 2017/8/9.
+ * 搜索RecyclerView适配器
  */
 
 public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -39,7 +37,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SearchHoldere) holder).bindHolder(citys.get(position), position);
+        ((SearchHoldere) holder).bindHolder(citys.get(position));
     }
 
     @Override

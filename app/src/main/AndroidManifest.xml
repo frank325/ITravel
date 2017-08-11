@@ -37,10 +37,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTheme" />
         <activity
-            android:name=".activity.RetrievePasswordActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleTheme" />
-        <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -76,9 +72,15 @@
         <activity
             android:name=".activity.TravelNotesActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PersonInfoActivity" />
-        <activity android:name=".activity.MyShareActivity" />
-        <activity android:name=".activity.MyClooectActivity"></activity>
+        <activity
+            android:name=".activity.PersonInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyClooectActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

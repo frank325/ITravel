@@ -27,6 +27,21 @@ public class ImageBarnnerViewGroup extends ViewGroup {
     private TimerTask task;
     private Scroller scroller;
 
+    public ImageBarnnerViewGroup(Context context) {
+        super(context);
+        initObj();
+    }
+
+    public ImageBarnnerViewGroup(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initObj();
+    }
+
+    public ImageBarnnerViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initObj();
+    }
+
     /**
      * 监听图片变换
      */
@@ -75,20 +90,6 @@ public class ImageBarnnerViewGroup extends ViewGroup {
         isAuto = false;
     }
 
-    public ImageBarnnerViewGroup(Context context) {
-        super(context);
-        initObj();
-    }
-
-    public ImageBarnnerViewGroup(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initObj();
-    }
-
-    public ImageBarnnerViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initObj();
-    }
 
     private void initObj() {
         scroller = new Scroller(getContext());
@@ -203,4 +204,5 @@ public class ImageBarnnerViewGroup extends ViewGroup {
         }
         return true; //已经处理好事件
     }
+
 }

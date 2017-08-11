@@ -10,11 +10,10 @@ import java.util.List;
 
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.TravelNotes;
-import lyf.com.example.itravel.holder.ShareHolder;
 import lyf.com.example.itravel.holder.TravelNotesHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 游记RecyclerView适配器
  */
 
 public class TravelNotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -45,4 +44,5 @@ public class TravelNotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemCount() {
         return travelNotes.size();
     }
+
 }

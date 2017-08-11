@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -15,12 +14,13 @@ import lyf.com.example.itravel.activity.MyClooectActivity;
 import lyf.com.example.itravel.activity.MyShareActivity;
 
 /**
- * Created by Administrator on 2017/8/10.
+ * 我Holder
  */
 
 public class PersonHolder extends RecyclerView.ViewHolder {
 
     private int position;
+
     @BindView(R.id.tv_info) TextView tvInfo;
     @BindView(R.id.iv_info) ImageView ivInfo;
 
@@ -30,6 +30,9 @@ public class PersonHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(String info, int position) {
         this.position = position;
         tvInfo.setText(info);
@@ -43,6 +46,9 @@ public class PersonHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * 响应点击事件，
+     */
     @OnClick({R.id.ll_person_my, R.id.tv_info, R.id.iv_info}) public void gomy() {
         Intent intent = new Intent();
         switch (position) {
@@ -55,4 +61,5 @@ public class PersonHolder extends RecyclerView.ViewHolder {
         }
         itemView.getContext().startActivity(intent);
     }
+
 }

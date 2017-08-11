@@ -20,7 +20,7 @@ import android.view.animation.Interpolator;
 import lyf.com.example.itravel.R;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 自定义下拉刷新View
  */
 
 public class TouchPullView extends View{
@@ -36,12 +36,34 @@ public class TouchPullView extends View{
     private int mTargetWidth = 400; //目标宽度
     private int mTargetGravityHeight = 10; //重心点最终高度
     private int mTangentAngle = 105;//角度变换
+
     private Interpolator mProgressInterpolator = new DecelerateInterpolator();
     private Interpolator mTanentAngleInterpolator;
 
     private ValueAnimator valueAnimator;
     private Drawable mContent = null;
     private int mContentMargin = 0;
+
+    public TouchPullView(Context context) {
+        super(context);
+        init(null);
+    }
+
+    public TouchPullView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs);
+    }
+
+    public TouchPullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(attrs);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public TouchPullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(attrs);
+    }
 
     /**
      * 添加释放操作
@@ -68,32 +90,10 @@ public class TouchPullView extends View{
         valueAnimator.start();
     }
 
-    public TouchPullView(Context context) {
-        super(context);
-        init(null);
-    }
-
-    public TouchPullView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
-    }
-
-    public TouchPullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public TouchPullView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(attrs);
-    }
-
     /**
      * 初始化
      */
     private void init(AttributeSet attrs) {
-
         /**
          * 得到用户设置的参数
          */

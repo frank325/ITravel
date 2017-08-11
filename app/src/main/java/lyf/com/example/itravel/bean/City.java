@@ -1,5 +1,9 @@
 package lyf.com.example.itravel.bean;
 
+/**
+ * 城市信息
+ */
+
 public class City{
 
 	private String id_city;

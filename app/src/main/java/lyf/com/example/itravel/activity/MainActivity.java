@@ -1,30 +1,22 @@
 package lyf.com.example.itravel.activity;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.fragment.HomePageFragment;
 import lyf.com.example.itravel.fragment.PersonFragment;
@@ -47,13 +39,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tb_main) Toolbar tbMain;
     @BindView(R.id.tv_title) TextView tvTitle;
     @BindView(R.id.tv_parent) TextView tvParent;
-
     @BindView(R.id.ll_main) LinearLayout llMain;
-
     @BindView(R.id.ib_home_page) ImageButton ibHomePage;
     @BindView(R.id.ib_share) ImageButton ibShare;
     @BindView(R.id.ib_person) ImageButton ibPerson;
-
     @BindView(R.id.tv_home_page) TextView tvHomePage;
     @BindView(R.id.tv_share) TextView tvShare;
     @BindView(R.id.tv_person) TextView tvPerson;
@@ -65,30 +54,53 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this); //绑定依赖注入ButterKnif
         tbMain.setTitle("");
-        llMain.setAlpha(0.991f);
         setSelect(HOME_PAGE);
         setSupportActionBar(tbMain); //设置SupportActionBar为Toolbar
     }
 
     /**
-     * 响应点击事件，显示首页Fragment
+     * 显示菜单
      */
-    @OnClick(R.id.ll_home_page) public void homePage() {
-        setSelect(HOME_PAGE);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        switch (selectPage) {
+            case HOME_PAGE:
+                getMenuInflater().inflate(R.menu.menu_home_page, menu);
+                return true;
+            case SHARE:
+                getMenuInflater().inflate(R.menu.menu_share, menu);
+                return true;
+            case PERSON:
+                getMenuInflater().inflate(R.menu.menu_person, menu);
+                return  true;
+            default:
+                return false;
+        }
     }
 
     /**
-     * 响应点击事件，显示分享Fragment
+     * 响应菜单点击事件
      */
-    @OnClick(R.id.ll_share) public void share() {
-        setSelect(SHARE);
-    }
-
-    /**
-     * 响应点击事件，显示我Fragment
-     */
-    @OnClick(R.id.ll_person) public void person() {
-        setSelect(PERSON);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent();
+        switch (item.getItemId()) {
+            case R.id.action_add: //添加菜单
+                AddPopWindow addPopWindow = new AddPopWindow(this);
+                addPopWindow.showPopupWindow(tvParent); //显示PopupWindow
+                break;
+            case R.id.action_search: //搜索菜单
+                intent.setClass(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_setting: //设置菜单
+                intent.setClass(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -97,11 +109,14 @@ public class MainActivity extends AppCompatActivity {
     private void setSelect(int tabe)
     {
         selectPage = tabe;
-        invalidateOptionsMenu();
+        invalidateOptionsMenu(); //刷新菜单
+
         resetImgs();
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         hideFragment(transaction); //隐藏fragment
+
         // 设置内容区域
         switch (tabe)
         {
@@ -144,11 +159,23 @@ public class MainActivity extends AppCompatActivity {
                 ibPerson.setImageResource(R.drawable.person_light);
                 tvPerson.setTextColor(Color.parseColor("#86D2C6"));
                 break;
-
             default:
                 break;
         }
         transaction.commit(); //提交
+    }
+
+    /**
+     * 将图标和文字设置为灰色
+     */
+    private void resetImgs() {
+        ibHomePage.setImageResource(R.drawable.home_page_nomal);
+        ibShare.setImageResource(R.drawable.share_nomal);
+        ibPerson.setImageResource(R.drawable.person_nomal);
+
+        tvHomePage.setTextColor(Color.parseColor("#999999"));
+        tvShare.setTextColor(Color.parseColor("#999999"));
+        tvPerson.setTextColor(Color.parseColor("#999999"));
     }
 
     /**
@@ -171,61 +198,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 将图标和文字设置为灰色
+     * 响应点击事件，显示首页Fragment
      */
-    private void resetImgs() {
-        ibHomePage.setImageResource(R.drawable.home_page_nomal);
-        ibShare.setImageResource(R.drawable.share_nomal);
-        ibPerson.setImageResource(R.drawable.person_nomal);
-
-        tvHomePage.setTextColor(Color.parseColor("#999999"));
-        tvShare.setTextColor(Color.parseColor("#999999"));
-        tvPerson.setTextColor(Color.parseColor("#999999"));
+    @OnClick(R.id.ll_home_page) public void homePage() {
+        setSelect(HOME_PAGE);
     }
 
     /**
-     * 显示菜单
+     * 响应点击事件，显示分享Fragment
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        switch (selectPage) {
-            case HOME_PAGE:
-                getMenuInflater().inflate(R.menu.menu_home_page, menu);
-                return true;
-            case SHARE:
-                getMenuInflater().inflate(R.menu.menu_share, menu);
-                return true;
-            case PERSON:
-                getMenuInflater().inflate(R.menu.menu_person, menu);
-                return  true;
-            default:
-                return false;
-        }
+    @OnClick(R.id.ll_share) public void share() {
+        setSelect(SHARE);
     }
 
     /**
-     * 响应菜单点击事件
+     * 响应点击事件，显示我Fragment
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent();
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                AddPopWindow addPopWindow = new AddPopWindow(this);
-                addPopWindow.showPopupWindow(tvParent);
-                break;
-            case R.id.action_search:
-                intent.setClass(MainActivity.this, SearchActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.action_setting:
-                intent.setClass(MainActivity.this, SettingActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    @OnClick(R.id.ll_person) public void person() {
+        setSelect(PERSON);
     }
 
 }

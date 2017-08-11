@@ -1,9 +1,7 @@
 package lyf.com.example.itravel.bean;
 
-import java.io.Serializable;
-
 /**
- * 用户信息类
+ * 用户信息
  */
 
 public class User{

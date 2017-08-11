@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -30,7 +29,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/7.
+ * 用户信息Holder
  */
 
 public class UserInfoHolder extends RecyclerView.ViewHolder {
@@ -53,17 +52,20 @@ public class UserInfoHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(String userInfo, int position) {
         this.data = userInfo;
         this.position = position;
 
         switch (position) {
             case 0:
-                dataName = "head_portrait_url";
-                tvDataName.setText("头像");
                 Picasso.with(itemView.getContext()).load(ITravelConstant.URL + userInfo)
                         .resize(150, 150).transform(new CircleTransform())
                         .error(R.drawable.default_whith).into(ivHeadPortrait);
+                dataName = "head_portrait_url";
+                tvDataName.setText("头像");
                 ivHeadPortrait.setVisibility(View.VISIBLE);
                 break;
             case 1:
@@ -82,7 +84,6 @@ public class UserInfoHolder extends RecyclerView.ViewHolder {
                 tvData.setText(userInfo);
                 break;
             case 4:
-
                 dataName = "signature";
                 tvDataName.setText("个性签名");
                 if (userInfo.length() > 13) {
@@ -90,17 +91,20 @@ public class UserInfoHolder extends RecyclerView.ViewHolder {
                 }else {
                     tvData.setText(userInfo);
                 }
-
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 响应点击事件，执行修改用户信息
+     */
     @OnClick({R.id.rl_user_info, R.id.iv_go}) public void updateUserInfo() {
         Intent intent = new Intent();
         intent.putExtra("data", data);
         intent.putExtra("dataName", dataName);
+
         switch (position) {
             case 0:
                 intent.setClass(itemView.getContext(), UpdateHeadPortraitActivity.class);
@@ -144,8 +148,12 @@ public class UserInfoHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * 修改用户信息
+     */
     public void updateInfo() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
+
         hashMap.put("account", account);
         hashMap.put("data", data);
         hashMap.put("dataName", dataName);

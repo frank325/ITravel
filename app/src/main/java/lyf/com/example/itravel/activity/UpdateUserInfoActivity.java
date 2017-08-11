@@ -3,7 +3,6 @@ package lyf.com.example.itravel.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -25,6 +24,10 @@ import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.model.OkhttpModel;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 修改信息页面
+ */
 
 public class UpdateUserInfoActivity extends AppCompatActivity {
 
@@ -48,6 +51,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         initView();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         Intent intent = getIntent();
         data = intent.getStringExtra("data");
@@ -64,12 +70,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         }
     }
 
-    private void initView() {
-        etData.setText(data);
-        etData.setHint(str);
-        etData.setSelection(etData.getText().toString().length());
-    }
-
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbUpdateUserInfo.setNavigationIcon(R.drawable.back);
         tbUpdateUserInfo.setTitle("");
@@ -88,6 +91,18 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化控件
+     */
+    private void initView() {
+        etData.setText(data);
+        etData.setHint(str);
+        etData.setSelection(etData.getText().toString().length());
+    }
+
+    /**
+     * 响应点击事件，执行修改用户信息
+     */
     @OnClick(R.id.tv_save) public void saveUserInfo() {
         data = etData.getText().toString().trim();
 
@@ -99,6 +114,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
         hashMap.put("data", data);
         hashMap.put("dataName", dataName);
         hashMap.put("account", account);
+
         /**
          * 发送网络请求
          */

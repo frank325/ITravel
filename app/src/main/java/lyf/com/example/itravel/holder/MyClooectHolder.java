@@ -1,7 +1,5 @@
 package lyf.com.example.itravel.holder;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +17,8 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.ITravelConstant;
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.activity.MyClooectActivity;
 import lyf.com.example.itravel.activity.PersonInfoActivity;
 import lyf.com.example.itravel.activity.TravelNotesActivity;
 import lyf.com.example.itravel.bean.TravelNotes;
@@ -34,13 +30,11 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 我的收藏Holder
  */
 
 public class MyClooectHolder extends RecyclerView.ViewHolder {
 
-    private int num, position;
-    private boolean isClooect = false;
     private User user;
     private TravelNotes travelNotes;
     private String account;
@@ -64,10 +58,36 @@ public class MyClooectHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
+    public void bindHolder(TravelNotes travelNotes) {
+        this.travelNotes = travelNotes;
+        tvTime.setText(travelNotes.getAdd_time().substring(0,10));
+        Picasso.with(itemView.getContext()).load(ITravelConstant.URL + travelNotes.getTravel_photo_url())
+                .resize(600, 300).into(ivPhoto);
+        if (travelNotes.getTravel_content().length() > 16) {
+            tvContent.setText(travelNotes.getTravel_content().substring(0, 16) + "...");
+        }else {
+            tvContent.setText(travelNotes.getTravel_content());
+        }
+        tvCity.setText(travelNotes.getTravel_city());
+        tvDayNum.setText(travelNotes.getTravel_day_num());
+        tvMoney.setText(travelNotes.getTravel_money());
+        tvClooectNum.setText(travelNotes.getClooect_num());
+        initData();
+    }
+
+    /**
+     * 初始化数据
+     */
     private void initData() {
         account = travelNotes.getTravel_account();
         hashMap.put("account", account);
 
+        /**
+         * 发送网络请求
+         */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("getUserInfo.do", hashMap, new Callback() {
 
@@ -86,8 +106,10 @@ public class MyClooectHolder extends RecyclerView.ViewHolder {
                 user = JsonAnalysisUtils.parseUserJson(response.toString());
                 if (JsonAnalysisUtils.isSuccess) {
                     Picasso.with(itemView.getContext()).load(ITravelConstant.URL + user.getHead_portrait_url())
-                            .memoryPolicy(MemoryPolicy.NO_CACHE).resize(150, 150).transform(new CircleTransform()).error(R.drawable.default_whith).into(ivUserHead);
+                            .memoryPolicy(MemoryPolicy.NO_CACHE).resize(150, 150).transform(new CircleTransform())
+                            .error(R.drawable.default_whith).into(ivUserHead);
                     tvAccount.setText(user.getName());
+
                     if ("男".equals(user.getGender())) {
                         tvGender.setText("♂");
                         tvGender.setTextColor(Color.parseColor("#0099FF"));
@@ -98,36 +120,14 @@ public class MyClooectHolder extends RecyclerView.ViewHolder {
                 }else {
                     Toast.makeText(itemView.getContext(), "获取信息失败", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
     }
 
-    public void bindHolder(TravelNotes travelNotes, int position) {
-        this.position = position;
-        this.travelNotes = travelNotes;
-        tvTime.setText(travelNotes.getAdd_time().substring(0,10));
-        Picasso.with(itemView.getContext()).load(ITravelConstant.URL + travelNotes.getTravel_photo_url())
-                .resize(600, 300).into(ivPhoto);
-        if (travelNotes.getTravel_content().length() > 16) {
-            tvContent.setText(travelNotes.getTravel_content().substring(0, 16) + "...");
-        }else {
-            tvContent.setText(travelNotes.getTravel_content());
-        }
-        tvCity.setText(travelNotes.getTravel_city());
-        tvDayNum.setText(travelNotes.getTravel_day_num());
-        tvMoney.setText(travelNotes.getTravel_money());
-        tvClooectNum.setText(travelNotes.getClooect_num());
-        initData();
-    }
-
-    @OnClick(R.id.tv_close_clooect) public void close() {
-
-    }
-
-
-
+    /**
+     * 响应点击事件，跳转至游记信息页面
+     */
     @OnClick(R.id.iv_go) public void go() {
         Intent intent = new Intent();
         intent.putExtra("id_travel_notes", travelNotes.getId_travel_notes());
@@ -135,10 +135,14 @@ public class MyClooectHolder extends RecyclerView.ViewHolder {
         itemView.getContext().startActivity(intent);
     }
 
+    /**
+     * 响应点击事件，跳转至用户详细信息页面
+     */
     @OnClick(R.id.iv_user_head) public void clickHead() {
         Intent intent = new Intent();
         intent.putExtra("travel_account", travelNotes.getTravel_account());
         intent.setClass(itemView.getContext(), PersonInfoActivity.class);
         itemView.getContext().startActivity(intent);
     }
+
 }

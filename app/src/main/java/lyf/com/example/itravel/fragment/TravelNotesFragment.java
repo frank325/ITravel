@@ -19,7 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.adapter.ShareAdapter;
 import lyf.com.example.itravel.adapter.TravelNotesAdapter;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.model.OkhttpModel;
@@ -28,7 +27,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/5.
+ * 游记Fragment
  */
 
 public class TravelNotesFragment extends Fragment{
@@ -53,6 +52,18 @@ public class TravelNotesFragment extends Fragment{
         return view;
     }
 
+    /**
+     * 初始化RecylerView
+     */
+    private void initRecylerView() {
+        rvTravelNotes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        travelNotesAdapter = new TravelNotesAdapter(getContext());
+        rvTravelNotes.setAdapter(travelNotesAdapter);
+    }
+
+    /**
+     * 初始化数据
+     */
     private void initData() {
         Bundle bundle = getArguments();
         city_name = bundle.getString("scenic_city_name");
@@ -60,11 +71,13 @@ public class TravelNotesFragment extends Fragment{
         tvResult.setText("正在获取信息");
 
         hashMap.put("city_name", city_name);
+
         /**
          * 发送网络请求
          */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("getCityTravelNotesInfo.ao", hashMap, new Callback() {
+
             @Override
             public Object parseNetworkResponse(Response response, int id) throws Exception {
                 return response.body().string();
@@ -92,12 +105,5 @@ public class TravelNotesFragment extends Fragment{
             }
         });
     }
-
-    private void initRecylerView() {
-        rvTravelNotes.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        travelNotesAdapter = new TravelNotesAdapter(getContext());
-        rvTravelNotes.setAdapter(travelNotesAdapter);
-    }
-
 
 }

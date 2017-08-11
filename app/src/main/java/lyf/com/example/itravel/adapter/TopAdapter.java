@@ -10,11 +10,10 @@ import java.util.List;
 
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.City;
-import lyf.com.example.itravel.holder.HomePageHolder;
 import lyf.com.example.itravel.holder.TopHolder;
 
 /**
- * Created by Administrator on 2017/8/6.
+ * 热门城市RecyclerView适配器
  */
 
 public class TopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

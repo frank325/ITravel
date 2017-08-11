@@ -24,12 +24,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.adapter.SearchAdapter;
-import lyf.com.example.itravel.adapter.TopAdapter;
 import lyf.com.example.itravel.bean.City;
 import lyf.com.example.itravel.model.OkhttpModel;
 import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 搜索页面
+ */
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -53,11 +56,36 @@ public class SearchActivity extends AppCompatActivity {
         initToolbar();
     }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
+        tbSearch.setNavigationIcon(R.drawable.back);
+        tbSearch.setTitle("");
+
+        setSupportActionBar(tbSearch); //设置SupportActionBar为Toolbar
+
+        etSearch.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE); //自动弹出键盘
+
+        tbSearch.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 初始化RecylerView
+     */
     private void initRecylerView() {
         ++initNum;
+
         rvSearch.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         searchAdapter = new SearchAdapter(this);
         rvSearch.setAdapter(searchAdapter);
+
         if (initNum == 1) {
             rvSearch.addItemDecoration(new RecyclerView.ItemDecoration() {
                 @Override
@@ -68,28 +96,13 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         }
+
     }
 
-    private void initToolbar() {
-        tbSearch.setNavigationIcon(R.drawable.back);
-        tbSearch.setTitle("");
-
-        setSupportActionBar(tbSearch); //设置SupportActionBar为Toolbar
-
-        etSearch.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
-        tbSearch.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
-
+    /**
+     * 监听点击事件，执行搜索
+     */
     @OnClick(R.id.tv_search) public void search() {
-        tvResult.setText("");
-        initRecylerView();
         data = etSearch.getText().toString().trim();
 
         if(TextUtils.isEmpty(data)) {
@@ -97,7 +110,11 @@ public class SearchActivity extends AppCompatActivity {
             return;
         }
 
+        tvResult.setText("正在搜索");
+        initRecylerView();
+
         hashMap.put("data", data);
+
         /**
          * 发送网络请求
          */
@@ -112,6 +129,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Toast.makeText(SearchActivity.this, "搜索失败", Toast.LENGTH_SHORT).show();
+                tvResult.setText("搜索失败");
             }
 
             @Override
@@ -126,9 +144,11 @@ public class SearchActivity extends AppCompatActivity {
                         tvResult.setText("搜索成功，共有" + citys.size() + "条结果");
                     }else {
                         Toast.makeText(SearchActivity.this, "搜索失败", Toast.LENGTH_SHORT).show();
+                        tvResult.setText("搜索失败");
                     }
                 }
             }
         });
     }
+
 }

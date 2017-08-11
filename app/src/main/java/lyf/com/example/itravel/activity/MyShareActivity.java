@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.callback.Callback;
@@ -20,12 +19,15 @@ import butterknife.ButterKnife;
 import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.adapter.MyShareAdapter;
-import lyf.com.example.itravel.adapter.TravelNotesAdapter;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.model.OkhttpModel;
 import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 我的分享页面
+ */
 
 public class MyShareActivity extends AppCompatActivity {
 
@@ -48,16 +50,39 @@ public class MyShareActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
+        tbMyShare.setNavigationIcon(R.drawable.back);
+        tbMyShare.setTitle("");
+
+        setSupportActionBar(tbMyShare); //设置SupportActionBar为Toolbar
+
+        tbMyShare.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 初始化RecyclerView
+     */
     private void initRecyclerView() {
         rvMyShare.setLayoutManager(new LinearLayoutManager(MyShareActivity.this, LinearLayoutManager.VERTICAL, false));
         myShareAdapter = new MyShareAdapter(MyShareActivity.this);
         rvMyShare.setAdapter(myShareAdapter);
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
-
         hashMap.put("account", account);
+
         /**
          * 发送网络请求
          */
@@ -78,7 +103,7 @@ public class MyShareActivity extends AppCompatActivity {
                 if ("无结果".equals(response.toString())) {
                     Toast.makeText(MyShareActivity.this, "您还未分享", Toast.LENGTH_SHORT).show();
                 } else {
-                    travelNotes = JsonAnalysisUtils.parseAllTravelNotesJson(response.toString());
+                    travelNotes = JsonAnalysisUtils.parseAllTravelNotesJson(response.toString()); //解析Json数据
                     if (JsonAnalysisUtils.isSuccess) {
                         myShareAdapter.addList(travelNotes);
                         myShareAdapter.notifyDataSetChanged();
@@ -90,17 +115,4 @@ public class MyShareActivity extends AppCompatActivity {
         });
     }
 
-    private void initToolbar() {
-        tbMyShare.setNavigationIcon(R.drawable.back);
-        tbMyShare.setTitle("");
-
-        setSupportActionBar(tbMyShare); //设置SupportActionBar为Toolbar
-
-        tbMyShare.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
 }

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.callback.Callback;
@@ -28,6 +27,10 @@ import lyf.com.example.itravel.utlis.SPUtils;
 import okhttp3.Call;
 import okhttp3.Response;
 
+/**
+ * 修改密码页面
+ */
+
 public class UpdatePasswordActivity extends AppCompatActivity {
 
     private HashMap<String, String> hashMap = new HashMap<>();
@@ -45,9 +48,11 @@ public class UpdatePasswordActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initToolbar();
-        initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbUpdatePassword.setNavigationIcon(R.drawable.back);
         tbUpdatePassword.setTitle("");
@@ -55,7 +60,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         setSupportActionBar(tbUpdatePassword); //设置SupportActionBar为Toolbar
 
         etPassword.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE); //自动弹出窗口
 
         tbUpdatePassword.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +70,12 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
+    @OnClick(R.id.tv_save) public void save() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
         password = etPassword.getText().toString().trim();
         newPassword = etNewPassword.getText().toString().trim();
         confirmPassword = etConfirmPassword.getText().toString().trim();
-    }
 
-    @OnClick(R.id.tv_save) public void save() {
         if(TextUtils.isEmpty(password) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(confirmPassword)) {
             Toast.makeText(UpdatePasswordActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -83,10 +86,8 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             return;
         }
 
-        /**
-         * 密码MD5加密
-         */
-        md5Password = MD5Utils.StringToMD5(password);
+        md5Password = MD5Utils.StringToMD5(password); //将密码转换成md5
+
         if (!ITravelApplication.getiTravelApplication().getUser().getPassword().equals(md5Password)) {
             Toast.makeText(UpdatePasswordActivity.this, "原密码错误", Toast.LENGTH_SHORT).show();
             return;
@@ -97,11 +98,14 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             return;
         }
 
-        md5Password = MD5Utils.StringToMD5(newPassword);
+        md5Password = MD5Utils.StringToMD5(newPassword); //MD5加密
 
         updatePassword();
     }
 
+    /**
+     * 修改密码
+     */
     private void updatePassword() {
         hashMap.put("data", newPassword);
         hashMap.put("dataName", "password");
@@ -127,9 +131,12 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             public void onResponse(Object response, int id) {
                 if ("修改成功".equals(response.toString())) {
                     Toast.makeText(UpdatePasswordActivity.this, response.toString() + "！需重新登录", Toast.LENGTH_SHORT).show();
+
                     ITravelApplication.getiTravelApplication().setUser(new User("", ""));
+
                     SPUtils.remove(UpdatePasswordActivity.this, "account");
                     SPUtils.remove(UpdatePasswordActivity.this, "password");
+
                     Intent intent = new Intent();
                     intent.setClass(UpdatePasswordActivity.this, LoginActivity.class);
                     startActivity(intent);
@@ -139,4 +146,5 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             }
         });
     }
+
 }

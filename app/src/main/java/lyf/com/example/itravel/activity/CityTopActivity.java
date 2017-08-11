@@ -3,12 +3,10 @@ package lyf.com.example.itravel.activity;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.adapter.HomePageAdapter;
 import lyf.com.example.itravel.adapter.TopAdapter;
 import lyf.com.example.itravel.bean.City;
 import lyf.com.example.itravel.model.OkhttpModel;
@@ -31,7 +28,12 @@ import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
 
+/**
+ * 热门城市页面
+ */
+
 public class CityTopActivity extends AppCompatActivity {
+
     private List<City> citys;
     private TopAdapter topAdapter;
 
@@ -52,6 +54,9 @@ public class CityTopActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbTop.setNavigationIcon(R.drawable.back);
         tbTop.setTitle("");
@@ -66,21 +71,26 @@ public class CityTopActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化RecylerView
+     */
     private void initRecylerView() {
         rvTop.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         topAdapter = new TopAdapter(this);
         rvTop.setAdapter(topAdapter);
         rvTop.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) { //设置Item间距
                 outRect.top = 20;
                 outRect.left = 30;
                 outRect.right = 30;
             }
         });
-
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         tvLoading.setText("加载中···");
         tvLoading.setVisibility(View.VISIBLE);
@@ -108,7 +118,7 @@ public class CityTopActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Object response, int id) {
-                citys = JsonAnalysisUtils.parseAllCityJson(response.toString());
+                citys = JsonAnalysisUtils.parseAllCityJson(response.toString()); //解析Json数据
                 if (JsonAnalysisUtils.isSuccess) {
                     pbLoading.setVisibility(View.GONE);
                     tvLoading.setVisibility(View.GONE);
@@ -124,6 +134,9 @@ public class CityTopActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 监听点击事件，刷新数据
+     */
     @OnClick(R.id.iv_refresh) public void refresh() {
         initData();
     }

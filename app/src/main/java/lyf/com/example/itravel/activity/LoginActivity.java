@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.et_account) EditText etAccount;
     @BindView(R.id.et_password) EditText etPassword;
     @BindView(R.id.tv_register) TextView tvRegister;
-    @BindView(R.id.tv_forget_password) TextView tvForgetPassword;
     @BindView(R.id.iv_visibility_on_off) ImageView ivVisibilityOnOff;
 
     @Override
@@ -56,7 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         EventBus.getDefault().register(this); //注册EventBus
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
+        EventBus.getDefault().unregister(this); //注册EventBus
+    }
 
     /**
      *接收EventBus
@@ -65,13 +69,6 @@ public class LoginActivity extends AppCompatActivity {
     public void userEventBus(User user){
         etAccount.setText(user.getAccount());
         etPassword.setText(user.getPassword());
-    }
-
-    /**
-     * 响应点击事件，执行登录
-     */
-    @OnClick(R.id.bt_login) public void login() {
-        doLogin();
     }
 
     /**
@@ -141,6 +138,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
+     * 响应点击事件，执行登录
+     */
+    @OnClick(R.id.bt_login) public void login() {
+        doLogin();
+    }
+
+    /**
      * 响应点击事件，设置可见或不可见密码
      */
     @OnClick(R.id.iv_visibility_on_off) public void visibilityOnOff() {
@@ -166,12 +170,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * 响应点击事件，跳转至找回密码页面
-     */
-    @OnClick(R.id.tv_forget_password) public void forgetPassword() {
-        Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, RetrievePasswordActivity.class);
-        startActivity(intent);
-    }
 }

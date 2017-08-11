@@ -19,13 +19,12 @@ import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.holder.MyClooectHolder;
-import lyf.com.example.itravel.holder.MyShareHolder;
 import lyf.com.example.itravel.model.OkhttpModel;
 import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 我的收藏RecyclerView适配器
  */
 
 public class MyClooectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -53,7 +52,11 @@ public class MyClooectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((MyClooectHolder)holder).bindHolder(travelNotes.get(position), position);
+        ((MyClooectHolder)holder).bindHolder(travelNotes.get(position));
+
+        /**
+         * 响应点击事件，弹出窗口
+         */
         ((MyClooectHolder)holder).tvCloseClooect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +74,10 @@ public class MyClooectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                                 hashMap.put("isClooect", isClooect + "");
                                 hashMap.put("clooect_num", "" + num);
                                 hashMap.put("id_travel_notes", travelNotes.get(position).getId_travel_notes());
+
+                                /**
+                                 * 发送网络请求
+                                 */
                                 OkhttpModel okhttpModel = new OkhttpModel();
                                 okhttpModel.doGet("updateClooectNum.ao", hashMap, new Callback() {
 

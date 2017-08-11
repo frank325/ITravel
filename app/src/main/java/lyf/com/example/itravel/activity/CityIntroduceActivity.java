@@ -33,6 +33,10 @@ import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
 
+/**
+ * 城市信息页面
+ */
+
 public class CityIntroduceActivity extends AppCompatActivity {
 
     private static final int SCENIC = 1;
@@ -64,6 +68,9 @@ public class CityIntroduceActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbCityIntroduce.setNavigationIcon(R.drawable.back);
         tbCityIntroduce.setTitle("");
@@ -78,23 +85,30 @@ public class CityIntroduceActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.iv_good) public void good() {
-        if (isGood) {
-            ivGood.setImageResource(R.drawable.good_black);
-            num = Integer.parseInt(tvThinkGoNum.getText().toString()) - 1;
-            tvThinkGoNum.setText(num + "");
-            isGood = false;
-        }else {
-            ivGood.setImageResource(R.drawable.good_gray);
-            num = Integer.parseInt(tvThinkGoNum.getText().toString()) + 1;
-            tvThinkGoNum.setText(num + "");
-            isGood = true;
-        }
-        hashMap.put("isGood", isGood + "");
-        hashMap.put("think_go_num", "" + num);
-        hashMap.put("city_name", city.getCity_name());
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        Intent intent = getIntent();
+        city_name = intent.getStringExtra("city_name");
+        account = ITravelApplication.getiTravelApplication().getUser().getAccount();
+
+        hashMap.put("city_name", city_name);
+        hashMap.put("account", account);
+
+        setTabe(SCENIC);
+        getCityInfo();
+    }
+
+    /**
+     * 获取城市信息
+     */
+    public void getCityInfo() {
+        /**
+         * 发送网络请求
+         */
         OkhttpModel okhttpModel = new OkhttpModel();
-        okhttpModel.doGet("updateThinkGoNum.to", hashMap, new Callback() {
+        okhttpModel.doGet("getCityInfo.to", hashMap, new Callback() {
 
             @Override
             public Object parseNetworkResponse(Response response, int id) throws Exception {
@@ -103,32 +117,25 @@ public class CityIntroduceActivity extends AppCompatActivity {
 
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                Toast.makeText(CityIntroduceActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(Object response, int id) {
-                if("Success".equals(response.toString())) {
-                    if (isGood) {
-                        Toast.makeText(CityIntroduceActivity.this, "赞", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(CityIntroduceActivity.this, "取消", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                city = JsonAnalysisUtils.parseCityJson(response.toString());
+                Picasso.with(CityIntroduceActivity.this).load(ITravelConstant.URL + city.getCity_photo_url())
+                        .resize(ITravelConstant.WITTH, 500).into(ivCityPhoto);
+                tvTitle.setText(city.getCity_name());
+                tvCityAddress.setText(city.getCity_address());
+                tvThinkGoNum.setText(city.getThink_go_num());
+                getUserInfo();
             }
         });
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        city_name = intent.getStringExtra("city_name");
-        account = ITravelApplication.getiTravelApplication().getUser().getAccount();
-        hashMap.put("city_name", city_name);
-        hashMap.put("account", account);
-        setTabe(SCENIC);
-        getCityInfo();
-    }
-
+    /**
+     * 获取用户信息
+     */
     public void getUserInfo() {
         /**
          * 发送网络请求
@@ -162,12 +169,28 @@ public class CityIntroduceActivity extends AppCompatActivity {
         });
     }
 
-    public void getCityInfo() {
-        /**
-         * 发送网络请求
-         */
+    /**
+     * 监听点击事件，执行修改点赞数
+     */
+    @OnClick(R.id.iv_good) public void good() {
+        if (isGood) {
+            ivGood.setImageResource(R.drawable.good_black);
+            num = Integer.parseInt(tvThinkGoNum.getText().toString()) - 1;
+            tvThinkGoNum.setText(num + "");
+            isGood = false;
+        }else {
+            ivGood.setImageResource(R.drawable.good_gray);
+            num = Integer.parseInt(tvThinkGoNum.getText().toString()) + 1;
+            tvThinkGoNum.setText(num + "");
+            isGood = true;
+        }
+
+        hashMap.put("isGood", isGood + "");
+        hashMap.put("think_go_num", "" + num);
+        hashMap.put("city_name", city.getCity_name());
+
         OkhttpModel okhttpModel = new OkhttpModel();
-        okhttpModel.doGet("getCityInfo.to", hashMap, new Callback() {
+        okhttpModel.doGet("updateThinkGoNum.to", hashMap, new Callback() {
 
             @Override
             public Object parseNetworkResponse(Response response, int id) throws Exception {
@@ -176,38 +199,37 @@ public class CityIntroduceActivity extends AppCompatActivity {
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                Toast.makeText(CityIntroduceActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CityIntroduceActivity.this, "错误", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(Object response, int id) {
-                city = JsonAnalysisUtils.parseCityJson(response.toString());
-                Picasso.with(CityIntroduceActivity.this).load(ITravelConstant.URL + city.getCity_photo_url())
-                        .resize(ITravelConstant.WITTH, 500).into(ivCityPhoto);
-
-                tvTitle.setText(city.getCity_name());
-                tvCityAddress.setText(city.getCity_address());
-                tvThinkGoNum.setText(city.getThink_go_num());
-                getUserInfo();
+                if("Success".equals(response.toString())) {
+                    if (isGood) {
+                        Toast.makeText(CityIntroduceActivity.this, "赞", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(CityIntroduceActivity.this, "取消", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(CityIntroduceActivity.this, "错误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    @OnClick (R.id.tv_travel_notes) public void travelNotes() {
-        setTabe(TRAVEL_NOTES);
-    }
-
-    @OnClick (R.id.tv_scenic) public void scenic() {
-        setTabe(SCENIC);
-    }
-
+    /**
+     * 设置要显示的Fragment
+     * @param tabe 要显示页面的值
+     */
     private void setTabe(int tabe) {
         resetText();
         Bundle bundle = new Bundle();
         bundle.putString("scenic_city_name", city_name);
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         hideFragment(transaction); //隐藏fragment
+
         // 设置内容区域
         switch (tabe)
         {
@@ -240,6 +262,14 @@ public class CityIntroduceActivity extends AppCompatActivity {
     }
 
     /**
+     * 将字体颜色设置为灰色
+     */
+    private void resetText() {
+        tvTravelNotes.setTextColor(Color.parseColor("#999999"));
+        tvScenic.setTextColor(Color.parseColor("#999999"));
+    }
+
+    /**
      * 隐藏fragment
      */
     private void hideFragment(FragmentTransaction transaction)
@@ -254,9 +284,19 @@ public class CityIntroduceActivity extends AppCompatActivity {
         }
     }
 
-    private void resetText() {
-        tvTravelNotes.setTextColor(Color.parseColor("#999999"));
-        tvScenic.setTextColor(Color.parseColor("#999999"));
+
+    /**
+     * 监听点击事件，显示景点Fragment
+     */
+    @OnClick (R.id.tv_scenic) public void scenic() {
+        setTabe(SCENIC);
+    }
+
+    /**
+     * 监听点击事件，显示游记Fragment
+     */
+    @OnClick (R.id.tv_travel_notes) public void travelNotes() {
+        setTabe(TRAVEL_NOTES);
     }
 
 }

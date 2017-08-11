@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.callback.Callback;
@@ -20,13 +19,15 @@ import butterknife.ButterKnife;
 import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.adapter.MyClooectAdapter;
-import lyf.com.example.itravel.adapter.MyShareAdapter;
-import lyf.com.example.itravel.adapter.ShareAdapter;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.model.OkhttpModel;
 import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 我的收藏页面
+ */
 
 public class MyClooectActivity extends AppCompatActivity {
 
@@ -49,6 +50,35 @@ public class MyClooectActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
+        tbMyClooect.setNavigationIcon(R.drawable.back);
+        tbMyClooect.setTitle("");
+
+        setSupportActionBar(tbMyClooect); //设置SupportActionBar为Toolbar
+
+        tbMyClooect.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 初始化RecyclerView
+     */
+    private void initRecyclerView() {
+        rvMyCloect.setLayoutManager(new LinearLayoutManager(MyClooectActivity.this, LinearLayoutManager.VERTICAL, false));
+        myClooectAdapter = new MyClooectAdapter(MyClooectActivity.this);
+        rvMyCloect.setAdapter(myClooectAdapter);
+    }
+
+    /**
+     * 初始化数据
+     */
     private void initData() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
         hashMap.put("account", account);
@@ -74,7 +104,7 @@ public class MyClooectActivity extends AppCompatActivity {
                 if ("无结果".equals(response.toString())) {
                     Toast.makeText(MyClooectActivity.this, "您没有收藏", Toast.LENGTH_SHORT).show();
                 } else {
-                    travelNotes = JsonAnalysisUtils.parseAllTravelNotesJson(response.toString());
+                    travelNotes = JsonAnalysisUtils.parseAllTravelNotesJson(response.toString()); //Json数据解析
                     if (JsonAnalysisUtils.isSuccess) {
                         myClooectAdapter.addList(travelNotes);
                         myClooectAdapter.notifyDataSetChanged();
@@ -86,23 +116,4 @@ public class MyClooectActivity extends AppCompatActivity {
         });
     }
 
-    private void initRecyclerView() {
-        rvMyCloect.setLayoutManager(new LinearLayoutManager(MyClooectActivity.this, LinearLayoutManager.VERTICAL, false));
-        myClooectAdapter = new MyClooectAdapter(MyClooectActivity.this);
-        rvMyCloect.setAdapter(myClooectAdapter);
-    }
-
-    private void initToolbar() {
-        tbMyClooect.setNavigationIcon(R.drawable.back);
-        tbMyClooect.setTitle("");
-
-        setSupportActionBar(tbMyClooect); //设置SupportActionBar为Toolbar
-
-        tbMyClooect.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
 }

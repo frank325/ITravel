@@ -2,7 +2,6 @@ package lyf.com.example.itravel.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -25,6 +23,9 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.ITravelConstant;
 import lyf.com.example.itravel.R;
@@ -83,12 +84,17 @@ public class PersonFragment extends Fragment {
         initData();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
         ivGo.setEnabled(false);
         rlGo.setEnabled(false);
         tvRefresh.setVisibility(View.GONE);
+
         hashMap.put("account", account);
+
         /**
          * 发送网络请求
          */
@@ -112,6 +118,14 @@ public class PersonFragment extends Fragment {
                 if (JsonAnalysisUtils.isSuccess) {
                     ivGo.setEnabled(true);
                     rlGo.setEnabled(true);
+
+                    Picasso.with(getContext()).load(ITravelConstant.URL + user.getHead_portrait_url())
+                            .resize(150, 150).transform(new CircleTransform())
+                            .error(R.drawable.default_head).into(ivHeadPortrait);
+                    tvRefresh.setVisibility(View.GONE);
+                    tvName.setText(user.getName());
+                    tvShareNum.setText(user.getShare_num());
+
                     if ("男".equals(user.getGender())) {
                         tvGender.setText("♂");
                         tvGender.setTextColor(Color.parseColor("#0099FF"));
@@ -119,10 +133,7 @@ public class PersonFragment extends Fragment {
                         tvGender.setText("♀");
                         tvGender.setTextColor(Color.parseColor("#FF6666"));
                     }
-                    tvRefresh.setVisibility(View.GONE);
-                    tvName.setText(user.getName());
-                    tvShareNum.setText(user.getShare_num());
-                    Toast.makeText(getContext(), user.getClooect_travel_notes(), Toast.LENGTH_LONG);
+
                     if(!"".equals(user.getClooect_travel_notes()) && user.getClooect_travel_notes() != "null") {
                         String[] clooects = user.getClooect_travel_notes().split(" ");
                         if(clooects.length > 0) {
@@ -133,24 +144,24 @@ public class PersonFragment extends Fragment {
                     }else {
                         tvClooectNum.setText("0");
                     }
+
                     if (user.getSignature().length() > 15) {
                         tvContent.setText(user.getSignature().substring(0, 15) + "...");
                     }else {
                         tvContent.setText(user.getSignature());
                     }
-                    Picasso.with(getContext()).load(ITravelConstant.URL + user.getHead_portrait_url())
-                            .resize(150, 150).transform(new CircleTransform())
-                            .error(R.drawable.default_head).into(ivHeadPortrait);
+
                 }else {
                     Toast.makeText(getActivity(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
                     tvRefresh.setVisibility(View.VISIBLE);
                 }
-
             }
         });
     }
 
-
+    /**
+     * 初始化RecyclerView
+     */
     private void initRecyclerView() {
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rvPerson.setLayoutManager(gridLayoutManager);
@@ -160,25 +171,38 @@ public class PersonFragment extends Fragment {
         personAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 响应点击事件，跳转至用户信息页面
+     */
     @OnClick ({R.id.iv_go, R.id.rl_go}) public void go() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), UserInfoActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * 响应点击事件，刷新页面
+     */
     @OnClick(R.id.tv_refresh) public void refresh() {
         initData();
     }
 
+    /**
+     * 响应点击事件，跳转至我的分享页面
+     */
     @OnClick (R.id.ll_share) public void goMyShare() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyShareActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * 响应点击事件，跳转至我的收藏页面
+     */
     @OnClick (R.id.ll_clooect) public void goMyClooect() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), MyClooectActivity.class);
         startActivity(intent);
     }
+
 }

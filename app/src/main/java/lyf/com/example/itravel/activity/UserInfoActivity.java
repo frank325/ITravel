@@ -26,6 +26,10 @@ import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import okhttp3.Call;
 import okhttp3.Response;
 
+/**
+ * 用户信息页面
+ */
+
 public class UserInfoActivity extends AppCompatActivity {
 
     private String [] userInfo;
@@ -58,6 +62,9 @@ public class UserInfoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbUserInfo.setNavigationIcon(R.drawable.back);
         tbUserInfo.setTitle("");
@@ -72,18 +79,15 @@ public class UserInfoActivity extends AppCompatActivity {
         });
     }
 
-    private void initRecylerView() {
-        rvUserInfo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        userInfoAdapter = new UserInfoAdapter(this);
-        rvUserInfo.setAdapter(userInfoAdapter);
-        userInfoAdapter.addArray(userInfo);
-        userInfoAdapter.notifyDataSetChanged();
-    }
-
+    /**
+     * 初始化数据
+     */
     private void initData() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
         tvRefresh.setVisibility(View.GONE);
+
         hashMap.put("account", account);
+
         /**
          * 发送网络请求
          */
@@ -120,7 +124,22 @@ public class UserInfoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化RecylerView
+     */
+    private void initRecylerView() {
+        rvUserInfo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        userInfoAdapter = new UserInfoAdapter(this);
+        rvUserInfo.setAdapter(userInfoAdapter);
+        userInfoAdapter.addArray(userInfo);
+        userInfoAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 响应点击事件，返回
+     */
     @OnClick(R.id.tv_refresh) public void refresh() {
         initData();
     }
+
 }

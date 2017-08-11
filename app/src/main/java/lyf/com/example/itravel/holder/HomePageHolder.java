@@ -15,9 +15,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.ITravelConstant;
 import lyf.com.example.itravel.R;
@@ -30,7 +27,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/5.
+ * 首页Holder
  */
 
 public class HomePageHolder extends RecyclerView.ViewHolder {
@@ -55,8 +52,12 @@ public class HomePageHolder extends RecyclerView.ViewHolder {
         initDate();
     }
 
+    /**
+     * 初始化数据
+     */
     private void initDate() {
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
+
         hashMap.put("account", account);
 
         OkhttpModel okhttpModel = new OkhttpModel();
@@ -93,6 +94,9 @@ public class HomePageHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(City city) {
         this.city = city;
         Picasso.with(itemView.getContext()).load(ITravelConstant.URL + city.getCity_photo_url())
@@ -103,6 +107,9 @@ public class HomePageHolder extends RecyclerView.ViewHolder {
         tvThinkGoNum.setText(city.getThink_go_num());
     }
 
+    /**
+     * 响应点击事件，执行修改点赞数
+     */
     @OnClick(R.id.iv_good) public void good() {
         if (isGood) {
             ivGood.setImageResource(R.drawable.good_black);
@@ -115,9 +122,14 @@ public class HomePageHolder extends RecyclerView.ViewHolder {
             tvThinkGoNum.setText(num + "");
             isGood = true;
         }
+
         hashMap.put("isGood", isGood + "");
         hashMap.put("think_go_num", "" + num);
         hashMap.put("city_name", city.getCity_name());
+
+        /**
+         * 发送网络请求
+         */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("updateThinkGoNum.to", hashMap, new Callback() {
 
@@ -144,13 +156,14 @@ public class HomePageHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    /**
+     * 响应点击事件，跳转至城市信息页面
+     */
     @OnClick (R.id.iv_city_photo) public void clickPhoto() {
         Intent intent = new Intent();
         intent.putExtra("city_name", city.getCity_name());
         intent.setClass(itemView.getContext(), CityIntroduceActivity.class);
         itemView.getContext().startActivity(intent);
     }
-
-
 
 }

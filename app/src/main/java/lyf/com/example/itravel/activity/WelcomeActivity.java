@@ -60,4 +60,5 @@ public class WelcomeActivity extends AppCompatActivity {
         };
         timer.schedule(task, 2000);
     }
+    
 }

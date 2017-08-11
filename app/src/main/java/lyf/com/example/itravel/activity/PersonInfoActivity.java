@@ -6,20 +6,15 @@ import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.callback.Callback;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,11 +22,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lyf.com.example.itravel.ITravelApplication;
 import lyf.com.example.itravel.ITravelConstant;
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.adapter.HomePageAdapter;
-import lyf.com.example.itravel.adapter.MyShareAdapter;
 import lyf.com.example.itravel.adapter.PersonInfoAdapter;
 import lyf.com.example.itravel.bean.TravelNotes;
 import lyf.com.example.itravel.bean.User;
@@ -40,6 +32,10 @@ import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import lyf.com.example.itravel.view.CircleTransform;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 用户详细信息页面
+ */
 
 public class PersonInfoActivity extends AppCompatActivity {
 
@@ -69,6 +65,26 @@ public class PersonInfoActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
+        tbPersonInfo.setNavigationIcon(R.drawable.back);
+        tbPersonInfo.setTitle("");
+
+        setSupportActionBar(tbPersonInfo); //设置SupportActionBar为Toolbar
+
+        tbPersonInfo.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 初始化RecyclerView
+     */
     private void initRecyclerView() {
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(PersonInfoActivity.this, 2);
         rvPersonInfo.setLayoutManager(gridLayoutManager);
@@ -76,7 +92,7 @@ public class PersonInfoActivity extends AppCompatActivity {
         rvPersonInfo.setAdapter(personInfoAdapter);
         rvPersonInfo.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) { //设置Item间距
                 GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams) view.getLayoutParams();
                 int spanSize = layoutParams.getSpanSize();
                 int spanIndex = layoutParams.getSpanIndex();
@@ -92,23 +108,11 @@ public class PersonInfoActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-    private void initToolbar() {
-        tbPersonInfo.setNavigationIcon(R.drawable.back);
-        tbPersonInfo.setTitle("");
-
-        setSupportActionBar(tbPersonInfo); //设置SupportActionBar为Toolbar
-
-        tbPersonInfo.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
-
+    /**
+     * 初始化数据
+     */
     private void initData() {
         Intent intent = getIntent();
         account = intent.getStringExtra("travel_account");
@@ -117,6 +121,9 @@ public class PersonInfoActivity extends AppCompatActivity {
         getPersonInfo();
     }
 
+    /**
+     * 获取用户信息
+     */
     public void getPersonInfo() {
         /**
          * 发送网络请求
@@ -138,6 +145,11 @@ public class PersonInfoActivity extends AppCompatActivity {
             public void onResponse(Object response, int id) {
                 user = JsonAnalysisUtils.parseUserJson(response.toString());
                 if (JsonAnalysisUtils.isSuccess) {
+                    Picasso.with(PersonInfoActivity.this).load(ITravelConstant.URL + user.getHead_portrait_url())
+                            .resize(150, 150).transform(new CircleTransform())
+                            .error(R.drawable.default_head).into(ivPersonHead);
+                    tvPersonName.setText(user.getName());
+
                     if ("男".equals(user.getGender())) {
                         tvShare.setText("他的分享");
                         tvGender.setText("♂");
@@ -147,27 +159,29 @@ public class PersonInfoActivity extends AppCompatActivity {
                         tvGender.setText("♀");
                         tvGender.setTextColor(Color.parseColor("#FF6666"));
                     }
-                    tvPersonName.setText(user.getName());
-                    Picasso.with(PersonInfoActivity.this).load(ITravelConstant.URL + user.getHead_portrait_url())
-                            .resize(150, 150).transform(new CircleTransform())
-                            .error(R.drawable.default_head).into(ivPersonHead);
+
                     if (user.getSignature().length() > 18) {
                         tvPersonSignature.setText(user.getSignature().substring(0,18) + "...");
                     }else {
                         tvPersonSignature.setText(user.getSignature());
                     }
+
                     getPersonTravelNotesInfo();
                 }
             }
         });
     }
 
+    /**
+     * 获取用户分享信息
+     */
     public void getPersonTravelNotesInfo() {
         /**
          * 发送网络请求
          */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("getMyShareTravelNotesInfo.ao", hashMap, new Callback() {
+
             @Override
             public Object parseNetworkResponse(Response response, int id) throws Exception {
                 return response.body().string();
@@ -195,4 +209,5 @@ public class PersonInfoActivity extends AppCompatActivity {
             }
         });
     }
+
 }

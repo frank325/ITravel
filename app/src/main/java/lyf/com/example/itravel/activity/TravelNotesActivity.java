@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.callback.Callback;
 
@@ -29,6 +28,10 @@ import lyf.com.example.itravel.utlis.JsonAnalysisUtils;
 import lyf.com.example.itravel.view.CircleTransform;
 import okhttp3.Call;
 import okhttp3.Response;
+
+/**
+ * 游记信息页面
+ */
 
 public class TravelNotesActivity extends AppCompatActivity {
 
@@ -62,6 +65,9 @@ public class TravelNotesActivity extends AppCompatActivity {
         initData();
     }
 
+    /**
+     * 初始化Toolbar
+     */
     private void initToolbar() {
         tbTravel.setNavigationIcon(R.drawable.back);
         tbTravel.setTitle("");
@@ -76,6 +82,9 @@ public class TravelNotesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         Intent intent = getIntent();
         id_travel_notes = intent.getStringExtra("id_travel_notes");
@@ -84,10 +93,56 @@ public class TravelNotesActivity extends AppCompatActivity {
         getTravelNotesInfo();
     }
 
+    /**
+     * 获取游记信息
+     */
+    private void getTravelNotesInfo() {
+        /**
+         * 发送网络请求
+         */
+        OkhttpModel okhttpModel = new OkhttpModel();
+        okhttpModel.doGet("getTravelNotesInfo.ao", hashMap, new Callback() {
+
+            @Override
+            public Object parseNetworkResponse(Response response, int id) throws Exception {
+                return response.body().string();
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Toast.makeText(TravelNotesActivity.this, "获取信息失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Object response, int id) {
+                travelNotes = JsonAnalysisUtils.parseTravelNotesJson(response.toString());
+                if (JsonAnalysisUtils.isSuccess) {
+                    Picasso.with(TravelNotesActivity.this).load(ITravelConstant.URL + travelNotes.getTravel_photo_url())
+                            .resize(600, 300).into(ivPhoto);
+                    tvTime.setText(travelNotes.getAdd_time().substring(0,10));
+                    tvContent.setText("        " + travelNotes.getTravel_content());
+                    tvCity.setText(travelNotes.getTravel_city());
+                    tvDayNum.setText(travelNotes.getTravel_day_num());
+                    tvMoney.setText(travelNotes.getTravel_money());
+                    tvClooectNum.setText(travelNotes.getClooect_num());
+                    getUserInfo();
+                }else {
+                    Toast.makeText(TravelNotesActivity.this, "获取信息失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取用户信息
+     */
     private void getUserInfo() {
         account = travelNotes.getTravel_account();
         hashMap.put("account", account);
 
+        /**
+         * 发送网络请求
+         */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("getUserInfo.do", hashMap, new Callback() {
 
@@ -108,6 +163,7 @@ public class TravelNotesActivity extends AppCompatActivity {
                     Picasso.with(TravelNotesActivity.this).load(ITravelConstant.URL + user.getHead_portrait_url())
                             .resize(150, 150).transform(new CircleTransform()).error(R.drawable.default_whith).into(ivUserHead);
                     tvAccount.setText(user.getName());
+
                     if ("男".equals(user.getGender())) {
                         tvGender.setText("♂");
                         tvGender.setTextColor(Color.parseColor("#0099FF"));
@@ -118,13 +174,15 @@ public class TravelNotesActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(TravelNotesActivity.this, "获取信息失败", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
         account = ITravelApplication.getiTravelApplication().getUser().getAccount();
         hashMap.put("account", account);
 
+        /**
+         * 发送网络请求
+         */
         okhttpModel.doGet("getUserInfo.do", hashMap, new Callback() {
 
             @Override
@@ -158,40 +216,9 @@ public class TravelNotesActivity extends AppCompatActivity {
         });
     }
 
-    public void getTravelNotesInfo() {
-        OkhttpModel okhttpModel = new OkhttpModel();
-        okhttpModel.doGet("getTravelNotesInfo.ao", hashMap, new Callback() {
-
-            @Override
-            public Object parseNetworkResponse(Response response, int id) throws Exception {
-                return response.body().string();
-            }
-
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Toast.makeText(TravelNotesActivity.this, "获取信息失败", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Object response, int id) {
-                travelNotes = JsonAnalysisUtils.parseTravelNotesJson(response.toString());
-                if (JsonAnalysisUtils.isSuccess) {
-                    tvTime.setText(travelNotes.getAdd_time().substring(0,10));
-                    Picasso.with(TravelNotesActivity.this).load(ITravelConstant.URL + travelNotes.getTravel_photo_url())
-                            .resize(600, 300).into(ivPhoto);
-                    tvContent.setText("        " + travelNotes.getTravel_content());
-                    tvCity.setText(travelNotes.getTravel_city());
-                    tvDayNum.setText(travelNotes.getTravel_day_num());
-                    tvMoney.setText(travelNotes.getTravel_money());
-                    tvClooectNum.setText(travelNotes.getClooect_num());
-                    getUserInfo();
-                }else {
-                    Toast.makeText(TravelNotesActivity.this, "获取信息失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
+    /**
+     * 监听点击事件，修改收藏数
+     */
     @OnClick(R.id.iv_clooect) public void clooect() {
         if (isClooect) {
             ivClooect.setImageResource(R.drawable.clooect_nomal);
@@ -204,9 +231,14 @@ public class TravelNotesActivity extends AppCompatActivity {
             tvClooectNum.setText(num + "");
             isClooect = true;
         }
+
         hashMap.put("isClooect", isClooect + "");
         hashMap.put("clooect_num", "" + num);
         hashMap.put("id_travel_notes", travelNotes.getId_travel_notes());
+
+        /**
+         * 发送网络请求
+         */
         OkhttpModel okhttpModel = new OkhttpModel();
         okhttpModel.doGet("updateClooectNum.ao", hashMap, new Callback() {
 
@@ -233,10 +265,14 @@ public class TravelNotesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 监听点击事件，跳转至用户详细信息页面
+     */
     @OnClick(R.id.iv_user_head) public void clickHead() {
         Intent intent = new Intent();
         intent.putExtra("travel_account", travelNotes.getTravel_account());
         intent.setClass(TravelNotesActivity.this, PersonInfoActivity.class);
         startActivity(intent);
     }
+
 }

@@ -14,7 +14,7 @@ import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.bean.Scenic;
 
 /**
- * Created by Administrator on 2017/8/6.
+ * 景点Holder
  */
 
 public class ScenicHolder extends RecyclerView.ViewHolder {
@@ -29,6 +29,9 @@ public class ScenicHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(Scenic scenic) {
         Picasso.with(itemView.getContext()).load(ITravelConstant.URL + scenic.getScenic_photo_url())
                 .resize(ITravelConstant.WITTH, 450).into(ivScenicPhoto);

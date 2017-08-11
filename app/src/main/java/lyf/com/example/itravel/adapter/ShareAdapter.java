@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lyf.com.example.itravel.R;
-import lyf.com.example.itravel.bean.Scenic;
 import lyf.com.example.itravel.bean.TravelNotes;
-import lyf.com.example.itravel.holder.ScenicHolder;
 import lyf.com.example.itravel.holder.ShareHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 分享RecyclerView适配器
  */
 
 public class ShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -46,4 +44,5 @@ public class ShareAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public int getItemCount() {
         return travelNotes.size();
     }
+
 }

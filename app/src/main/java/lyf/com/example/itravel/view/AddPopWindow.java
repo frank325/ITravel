@@ -12,6 +12,10 @@ import android.widget.PopupWindow;
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.activity.AddTravelNotesActivity;
 
+/**
+ * 自定义PopWindow
+ */
+
 public class AddPopWindow extends PopupWindow {
 
     private View conentView;
@@ -37,8 +41,7 @@ public class AddPopWindow extends PopupWindow {
         ColorDrawable dw = new ColorDrawable(0000000000);
         // 点back键和其他地方使其消失,设置了这个才能触发OnDismisslistener ，设置其他控件变化等操作
         this.setBackgroundDrawable(dw);
-        // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        // 设置SelectPicPopupWindow弹出窗体动画效果
+
         LinearLayout addTaskLayout = (LinearLayout) conentView
                 .findViewById(R.id.add_travel_notes);
 
@@ -56,8 +59,6 @@ public class AddPopWindow extends PopupWindow {
  
     /**
      * 显示popupWindow
-     * 
-     * @param parent
      */
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {

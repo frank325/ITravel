@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.holder.PersonHolder;
-import lyf.com.example.itravel.holder.SettingHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 我RecyclerView适配器
  */
 
 public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -42,5 +41,6 @@ public class PersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemCount() {
         return info.length;
     }
+
 }
 

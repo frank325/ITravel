@@ -4,14 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.holder.SettingHolder;
-import lyf.com.example.itravel.holder.UserInfoHolder;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 设置RecyclerView适配器
  */
 
 public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -43,5 +41,6 @@ public class SettingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public int getItemCount() {
         return info.length;
     }
+
 }
 

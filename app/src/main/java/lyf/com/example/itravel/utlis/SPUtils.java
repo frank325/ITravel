@@ -13,12 +13,10 @@ import java.util.Map;
 /**
  * SP保存信息工具类
  */
-public class SPUtils  
-{  
-    /** 
-     * 保存在手机里面的文件名 
-     */  
-    public static final String FILE_NAME = "itravel_user";
+
+public class SPUtils {
+
+    public static final String FILE_NAME = "itravel_user"; //保存在手机里面的文件名
   
     /** 
      * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法

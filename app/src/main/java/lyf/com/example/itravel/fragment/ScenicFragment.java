@@ -30,7 +30,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * Created by Administrator on 2017/8/5.
+ * 景点Fragment
  */
 
 public class ScenicFragment extends Fragment {
@@ -57,21 +57,28 @@ public class ScenicFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 初始化RecylerView
+     */
     private void initRecylerView() {
         rvScenic.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         scenicAdapter = new ScenicAdapter(getContext());
         rvScenic.setAdapter(scenicAdapter);
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         Bundle bundle = getArguments();
         scenic_city_name = bundle.getString("scenic_city_name");
-        hashMap.put("scenic_city_name", scenic_city_name);
 
         tvLoading.setText("加载中···");
         tvLoading.setVisibility(View.VISIBLE);
         pbLoading.setVisibility(View.VISIBLE);
         ivRefresh.setVisibility(View.GONE);
+
+        hashMap.put("scenic_city_name", scenic_city_name);
 
         /**
          * 发送网络请求
@@ -110,6 +117,9 @@ public class ScenicFragment extends Fragment {
         });
     }
 
+    /**
+     * 响应点击事件，刷新页面
+     */
     @OnClick(R.id.iv_refresh) public void refresh() {
         initData();
     }

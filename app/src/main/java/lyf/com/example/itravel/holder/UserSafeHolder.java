@@ -12,7 +12,7 @@ import lyf.com.example.itravel.R;
 import lyf.com.example.itravel.activity.UpdatePasswordActivity;
 
 /**
- * Created by Administrator on 2017/8/8.
+ * 账户安全Holder
  */
 
 public class UserSafeHolder extends RecyclerView.ViewHolder {
@@ -27,11 +27,17 @@ public class UserSafeHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
+    /**
+     * 绑定数据
+     */
     public void bindHolder(String info, int position) {
         this.position = position;
         tvInfo.setText(info);
     }
 
+    /**
+     * 响应点击事件
+     */
     @OnClick({R.id.ll_go, R.id.iv_go}) public void go() {
         Intent intent = new Intent();
         switch (position) {
@@ -43,4 +49,5 @@ public class UserSafeHolder extends RecyclerView.ViewHolder {
                 break;
         }
     }
+
 }
